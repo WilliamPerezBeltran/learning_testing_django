@@ -1,5 +1,6 @@
 from django.test import TestCase
-from test1.models import Author, Book
+from test1.models import Author, Book, Event
+from model_bakery import baker
 
 
 class TestModels(TestCase):
@@ -28,3 +29,27 @@ class TestModels(TestCase):
         philip = Author.objects.create(first_name="philip", last_name="Dickertsron")
         self.assertEqual(str(book), "The man in the high castle")
         self.assertEqual(str(philip), "philip Dickertsron")
+
+    # en vez de hacer esto
+    # def test_event_model(self):
+    #        event = Event.objects.create(
+    #            title="Some title",
+    #            seo_title="Some Seo title",
+    #            seo_description="Some description",
+    #            abstract="The abstract",
+    #            body="The body",
+    #            duration=2,
+    #            slug="the-slug",
+    #            start_date=datetime.now(),
+    #            end_date=datetime.now(),
+    #            price=800,
+    #            location="Rome",
+    #            published=False,
+    #        )
+    #    se hace lo de abajo,
+    #    mucho mas rapido
+
+    def test_event_model(self):
+        print("=========test_event_model=========")
+        event = baker.make(Event, title="The man in the high castle presentation")
+        self.assertEqual(str(event), "The man in the high castle presentation")
